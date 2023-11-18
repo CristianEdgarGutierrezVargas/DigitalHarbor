@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DIGITAL_HARBORModelV2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACTIVIDADES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_EMPLEADO" Type="bigint" />
+          <Property Name="FECHA_INICIO" Type="datetime" />
+          <Property Name="FECHA_FIN" Type="datetime" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="200" />
+          <Property Name="PATERNO" Type="varchar" MaxLength="200" />
+          <Property Name="MATERNO" Type="varchar" MaxLength="200" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="200" />
+          <Property Name="ESTADO" Type="bit" />
+        </EntityType>
+        <Association Name="FK_ACTIVIDADES_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="0..1" />
+          <End Role="ACTIVIDADES" Type="Self.ACTIVIDADES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ACTIVIDADES">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DIGITAL_HARBORModelV2StoreContainer">
+          <EntitySet Name="ACTIVIDADES" EntityType="Self.ACTIVIDADES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ACTIVIDADES_EMPLEADO" Association="Self.FK_ACTIVIDADES_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="ACTIVIDADES" EntitySet="ACTIVIDADES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DIGITAL_HARBORModelV2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ACTIVIDADES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FECHA_INICIO" Type="DateTime" Precision="3" />
+          <Property Name="FECHA_FIN" Type="DateTime" Precision="3" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ID_EMPLEADO" Type="Int64" />
+          <NavigationProperty Name="EMPLEADO" Relationship="DIGITAL_HARBORModelV2.FK_ACTIVIDADES_EMPLEADO" FromRole="ACTIVIDADES" ToRole="EMPLEADO" />
+        </EntityType>
+        <EntityContainer Name="DIGITAL_HARBOREntitiesV2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACTIVIDADES" EntityType="Self.ACTIVIDADES" />
+          <EntitySet Name="EMPLEADO" EntityType="DIGITAL_HARBORModelV2.EMPLEADO" />
+          <AssociationSet Name="FK_ACTIVIDADES_EMPLEADO" Association="DIGITAL_HARBORModelV2.FK_ACTIVIDADES_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="ACTIVIDADES" EntitySet="ACTIVIDADES" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PATERNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MATERNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ESTADO" Type="Boolean" />
+          <NavigationProperty Name="ACTIVIDADES" Relationship="DIGITAL_HARBORModelV2.FK_ACTIVIDADES_EMPLEADO" FromRole="EMPLEADO" ToRole="ACTIVIDADES" />
+        </EntityType>
+        <Association Name="FK_ACTIVIDADES_EMPLEADO">
+          <End Type="DIGITAL_HARBORModelV2.EMPLEADO" Role="EMPLEADO" Multiplicity="0..1" />
+          <End Type="DIGITAL_HARBORModelV2.ACTIVIDADES" Role="ACTIVIDADES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ACTIVIDADES">
+              <PropertyRef Name="ID_EMPLEADO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DIGITAL_HARBORModelV2StoreContainer" CdmEntityContainer="DIGITAL_HARBOREntitiesV2">
+          <EntitySetMapping Name="ACTIVIDADES">
+            <EntityTypeMapping TypeName="DIGITAL_HARBORModelV2.ACTIVIDADES">
+              <MappingFragment StoreEntitySet="ACTIVIDADES">
+                <ScalarProperty Name="ID_EMPLEADO" ColumnName="ID_EMPLEADO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FECHA_INICIO" ColumnName="FECHA_INICIO" />
+                <ScalarProperty Name="FECHA_FIN" ColumnName="FECHA_FIN" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLEADO">
+            <EntityTypeMapping TypeName="DIGITAL_HARBORModelV2.EMPLEADO">
+              <MappingFragment StoreEntitySet="EMPLEADO">
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="MATERNO" ColumnName="MATERNO" />
+                <ScalarProperty Name="PATERNO" ColumnName="PATERNO" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
